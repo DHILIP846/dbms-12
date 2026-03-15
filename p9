@@ -1,0 +1,39 @@
+Program : 
+a) Factorial of a given number. 
+SQL>  declare 
+i number(4):=1; 
+n number(4):=&n; 
+f number(4):=1; 
+begin 
+for i in 1..n loop 
+f:=f*i; 
+end loop; 
+Dbms_output.put_line('The Factorial of '||n||' is:'||f); 
+end; 
+/ 
+SQL> / 
+Enter value for n: 5 
+old   3: n number(4):=&n; 
+new   3: n number(4):=5; 
+The Factorial of 5 is:120 
+PL/SQL procedure successfully completed.
+b) Write a program to accept a number and find the sum of the digits 
+SQL> Declare 
+n number:=&n; 
+s number:=0; 
+r number:=0; 
+begin 
+while n !=0 
+loop 
+r:=mod(n,10); 
+s:=s+r; 
+n:=trunc(n/10); 
+end loop; 
+dbms_output.put_line('Sum of digits of given number is '||s); 
+end; 
+SQL> / 
+Enter value for n: 1234 
+old   2: n number:=&n; 
+new   2: n number:=1234; 
+Sum of digits of given number is 10 
+PL/SQL procedure successfully completed.

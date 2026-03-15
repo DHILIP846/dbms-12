@@ -1,0 +1,109 @@
+Step 1 : Creating table 
+SQL> create table tbmarks 
+(rno number(3),name varchar(15),mark1 number(3),mark2 number(3), total 
+number(3),AVERAGE number(5,2),result varchar(10)); 
+Step 2 : Creating procedure for Inserting records in tbmarks table 
+SQL>Create or replace procedure prmarksins (prno in number,pname in varchar,pmark1 in number, 
+pmark2 in number) 
+is 
+vtotal number;  
+vaverage number; 
+vresult varchar(10); 
+begin 
+vtotal:=pmark1+pmark2
+; vaverage:=vtotal/2; 
+if(pmark1>=40 and pmark2>=40) then 
+vresult:='Pass'; 
+else 
+vresult:='Fail'; 
+end if; 
+insert into tbmarks values(prno,pname,pmark1,pmark2,vtotal,vaverage,vresult); 
+commit; 
+end; 
+Step 3: To Run the Procedure 
+SQL> exec prmarksins(1,'KING',89,90); 
+PL/SQL procedure successfully completed. 
+SQL> exec prmarksins(2,'SCOTT',39,56); PL/SQL 
+procedure successfully completed. 
+SQL> select * from tbmarks; 
+RNO NAME 
+1 KING 
+2 SCOTT 
+MARK1 MARK2 TOTAL AVERAGE RESULT 
+89 
+90 
+39 
+56 
+Step 4 : Creating Procedure for Modifying records 
+SQL>create or replace procedure prmarksupd 
+(prno in number, pmark1 in number,pmark2 in number) 
+is 
+vtotal number; 
+vaverage number; 
+vresult varchar(10); 
+begin 
+vtotal:=pmark1+pmark2; 
+179 
+95 
+89.5 Pass 
+47.5 Fail 
+vaverage:=vtotal/2; 
+if(pmark1>=40 and pmark2>=40) then 
+vresult:='Pass'; 
+else 
+vresult:='Fail'; 
+end if; 
+update tbmarks set 
+mark1=pmark1,mark2=pmark2,total=vtotal,average=vaverage, result=vresult
+where rno=prno; 
+commit; 
+end; 
+Step 5 : 
+SQL> select * from tbmarks; 
+RNO NAME 
+1     
+2     
+KING 
+SCOTT 
+MARK1 MARK2 TOTAL AVERAGE RESULT 
+89 
+39 
+90 
+56 
+179 
+95 
+89.5  Pass 
+47.5 Fail
+SQL> exec prmarksupd(2,55,56); 
+PL/SQL procedure successfully completed. 
+SQL> select * from tbmarks; 
+RNO NAME 
+MARK1 MARK2 TOTAL AVERAGE RESULT 
+1 KING  
+2 SCOTT  
+89 
+55 
+90 
+56 
+179 89.5 Pass 
+111 55.5 Pass 
+Step 6: Creating Procedure for deleting the record in TBMARKS table 
+SQL> 
+create or replace procedure prmarksdel(prno in number) is 
+begin 
+delete from tbmarks whererno=prno; commit; 
+end; 
+SQL> exec prmarksdel(2); 
+PL/SQL procedure successfully completed. 
+SQL> select * from tbmarks; 
+RNO NAME  
+1 KING 
+MARK1 MARK2 TOTAL 
+89  
+90 
+179 
+AVERAGE 
+89.5 
+Database Management System Lab 
+RESULT  
+Pass

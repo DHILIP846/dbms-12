@@ -1,0 +1,82 @@
+EXCEPTION HANDLING FOR BANK ACCOUNT MANAGEMENT TABLE 
+i)  CREATE BANK ACCOUNT MANAGEMENT TABLE:- 
+SQL>create table bank_acc(accno varchar(10) primary key,name varchar(20),deposit number); 
+Table created. 
+ii) CREATE AN EXCEPTION FOR BANK ACCOUNT MANAGEMENT TABLE:- 
+SQL>set serveroutput on 
+SQL > declare 
+vaccno varchar(10):= '&vaccno'; 
+vname varchar2(20):= '&vname'; 
+vdeposit number:= &vdeposit; 
+zerodeposit exception; 
+begin 
+if vdeposit<=0 then 
+raise zerodeposit; 
+else 
+insert into bank_acc(accno,name,deposit) values (vaccno,vname,vdeposit); 
+dbms_output.put_line('Record is successfully inserted'); 
+end if; 
+exception 
+when zerodeposit then 
+dbms_output.put_line('Invalid deposit amount'); 
+end; 
+SQL> / 
+ENTER VALUE FOR ACCNO: SAR001 
+OLD   9:   A:='&ACCNO'; 
+NEW   9:   A:='SAR001'; 
+ENTER VALUE FOR DEPOSIT: 3500 
+OLD  10:   D:='&DEPOSIT'; 
+NEW  10:   D:='3500'; 
+ 
+Record is successfully inserted                                                          
+ 
+PL/SQL PROCEDURE SUCCESSFULLY COMPLETED. 
+ 
+SQL> SELECT * FROM BANK_ACC; 
+           ACCNO                NAME                      DEPOSIT                                                                       
+          SAR001               SURESH                        4000                                                                                                                                           
+          SAR002               ANOOP                         80000                                                                                                                                              
+          SAR003               SARAN                        90000           
+ 
+ 
+ 
+ 
+EXCEPTION HANDLING USING PL/SQL:               
+ 
+ 
+ 
+SQL> SELECT * FROM BANK_ACC; 
+ 
+ACCNO                       UNAME                               ACCTYPE                   BAL      
+                                       
+SAR001                     SURESH                                SAVINGS                     500    
+                                                                                 
+SAR003                      SARAN                                SAVINGS                   90000        
+ 
+SQL > declare 
+vaccno varchar(10):= '&vaccno'; 
+vname varchar2(20):= '&vname'; 
+vdeposit number:= &vdeposit; 
+zerodeposit exception; 
+begin 
+if vdeposit<=0 then
+raise zerodeposit; 
+else 
+insert into bank_acc(accno,name,deposit) values (vaccno,vname,vdeposit); 
+dbms_output.put_line('Record is successfully inserted'); 
+end if; 
+exception 
+when zerodeposit then 
+dbms_output.put_line('Invalid deposit amount'); 
+end; 
+SQL> / 
+ENTER VALUE FOR ACCNO: SAR002 
+OLD   9:   A:='&ACCNO'; 
+NEW   9:   A:='SAR002'; 
+ENTER VALUE FOR DEPOSIT: 0 
+OLD  10:   D:='&DEPOSIT'; 
+NEW  10:   D:='0'; 
+Invalid deposit amount                                                          
+PL/SQL PROCEDURE SUCCESSFULLY COMPLETED.                                                                
+                                                                                 
+SAR002                     ANOOP                                CURRENT                   80000                                                    

@@ -1,0 +1,69 @@
+i) CREATE A STUDENT TABLE: 
+SQL>create table student(rollno number,name varchar2(20),totalmarks number,result varchar2(4)); 
+ 
+Table created. 
+ 
+ 
+ii) INSERT RECORDS TO STUDENT TABLE: 
+ 
+SQL>insert into Student values(&rollno,'&name',&total,'&result'); 
+ 
+Enter value for rollno: 1001  
+Enter value for name: ARAVIND 
+Enter value for total: 33 
+Enter value for result: FAIL 
+old   1: insert into Student values(&rollno,'&name,',&total,’&FAIL’)  
+new   1: insert into Student values(1001,'ARAVIND',33, ‘FAIL’)  
+ 
+1 row created. 
+ 
+iii) SELECT ALL ROWS FROM STUDENT TABLE: 
+SQL>select * from Student; 
+ 
+ROLL_NO       NAME            TOTAL     RESULT 
+ 
+          1001      ARAVIND        33            FAIL 
+          1002      ARUN               95            PASS 
+          1003      SENTHIL          25            FAIL 
+          1004      THARUN         44             PASS 
+          1005      PRIYA              98             PASS
+          iv) SPLIT THE STUDENT TABLE INTO 2 TABLES BASED ON RESULT: 
+SQL>declare 
+query1 varchar2(100):='create table Student_pass as(select * from Student where result=''pass'')'; 
+query2 varchar2(100):='create table Student_fail as(select * from Student where result=''fail'')'; 
+begin 
+execute immediate query1; 
+execute immediate query2; 
+end; 
+/ 
+PL/SQL procedure successfully completed. 
+v) USE CURSOR FOR HANDLING RECORDS 
+SQL>declare 
+cursor cpass is select * from Student_pass; 
+cursor cfail is select * from Student_fail; 
+begin 
+dbms_output.put_line('LIST OF PASSED STUDENTS'); 
+for passrec in cpass loop 
+dbms_output.put_line(passrec.name); 
+end loop; 
+dbms_output.put_line('LIST OF FAILED STUDENTS');
+for failrec in cfail loop 
+dbms_output.put_line(failrec.name); 
+end loop; 
+end; 
+/ 
+LIST OF PASSED STUDENTS 
+ 
+ROLL_NO       NAME            TOTAL     RESULT 
+ 
+ 1002      ARUN               95            PASS 
+ 1004      THARUN         44             PASS 
+ 1005      PRIYA              98             PASS 
+ 
+ 
+ 
+LIST OF FAILED STUDENTS 
+ 
+ROLL_NO       NAME            TOTAL     RESULT
+1001      ARAVIND        33            FAIL 
+1003      SENTHIL          25            FAIL

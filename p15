@@ -1,0 +1,69 @@
+i)  CREATE INVENTORY MASTER TABLE:- 
+SQL>create table inventory_master1(orderid number primary key,custid number,orderdate date,amount 
+number); 
+Table created 
+ii) CREATE INVENTORY TRANSACTION TABLE:- 
+SQL>create table inventory_trans1(orderid number references inventory_master1,productid 
+number,productname varchar2(30),quantity number,unitprice number); 
+Table created 
+iii) CREATE TRIGGER ON INVENTORY MASTER:- 
+SQL>   set serveroutput on 
+SQL>  create or replace trigger  
+check1 before insert on inventory_master1 for each row 
+declare 
+begin 
+if(:new.amount<0)then 
+raise_application_error(-20040,'invalid amount'); 
+end if; 
+end; 
+Trigger created. 
+iv) INSERT INTO INVENTORY TABLES:- 
+SQL>insert into inventory_master1 values(&orderid,&custid,'&orderdate',&amount); 
+Enter value for orderid: 5001  
+Enter value for custid: 101 
+Enter value for orderdate: 12-JUL-20  
+Enter value for amount:2000 
+old   1: insert into inventory values(&orderid,&custid,’&orderdate’,&amount)  
+new   1: insert into inventory values(5001,101,12-JUL-20,2000) 
+1 row inserted  
+SQL>insert into inventory_master1 values(&orderid,&custid,'&orderdate',&amount); 
+Enter value for orderid: 5002 
+Enter value for custid: 102 
+Enter value for orderdate: 13-JUL-20  
+Enter value for amount:0 
+old   1: insert into inventory values(&orderid,&custid,’&orderdate’,&amount)  
+new   1: insert into inventory values(5002,102,13-JUL-20,0) 
+ORA-20202: INVALID AMOUNT 
+ORA-06512: AT "SURESH.CHECK1", LINE 16  
+ORA-04088: ERROR DURING EXECUTION OF TRIGGER 'SURESH.CHECK1' 
+v) CREATE TRIGGER ON INVENTORY TRANSACTION:- 
+SQL>create or replace trigger 
+check2 before insert on inventory_trans1 for each row 
+declare 
+begin 
+if(:new.quantity<0)then 
+raise_application_error(-20040,'invalid quantity'); 
+end if; 
+end; 
+Trigger created. 
+vi) INSERT INTO INVENTORY TRANSACTION:- 
+SQL>insert into inventory_trans1 values (&orderid,&productid,'&productname',&quantity,&unitprice);
+Enter value for orderid: 5001  
+Enter value for productid: 88
+Enter value for productname: Television 
+Enter value for quantity:10 
+Ener value for unitprice: 32000 
+old   1: insert into inventory values(&orderid,&productid,’&productname’,&quantity,&unitprice)  
+new   1: insert into inventory values(5001,88,Television,10,32000) 
+1 row inserted  
+SQL>insert into inventory_trans1 values (&orderid,&productid,'&productname',&quantity,&unitprice); 
+Enter value for orderid: 5002  
+Enter value for productid: 89 
+Enter value for productname: Airconditioner 
+Enter value for quantity:-10 
+Ener value for unitprice: 40000 
+old   1: insert into inventory values(&orderid,&productid,’&productname’,&quantity,&unitprice)  
+new   1: insert into inventory values(5002,89,’Airconditioner’,-10,40000) 
+ORA-20040: INVALID QUANTITY 
+ORA-06512: AT "SURESH.CHECK2", LINE 16  
+ORA-04088: ERROR DURING EXECUTION OF TRIGGER 'SURESH.CHECK2'

@@ -1,0 +1,97 @@
+SQL >  declare 
+java number(3); 
+dbms number(3); 
+co number(3); 
+mfcs number(3); 
+total number(4); 
+per number(6,2); 
+begin 
+dbms_output.put_line('ENTER THE MARKS'); 
+java:=&java; 
+dbms:=&dbms; 
+co:=&co; 
+mfcs:=&mfcsl; 
+total:=(java+dbms+co+mfcs); 
+per:=(total/400)*100; 
+if (java<40 or dbms<40 or co<40 or mfcs<40) then 
+dbms_output.put_line('FAIL'); 
+elsif per>75 then 
+dbms_output.put_line('GRADE A'); 
+elsif(per>65 and per<75) then 
+dbms_output.put_line('GRADE B'); 
+elsif(per>55 and per<65) then 
+dbms_output.put_line('GRADE C'); 
+else 
+dbms_output.put_line('INVALID INPUT'); 
+end if; 
+dbms_output.put_line('PERCENTAGE IS '||per); 
+end; 
+/ 
+SQL> / 
+Enter value for java: 100 
+old  10: java:=&java; 
+new  10: java:=100; 
+Enter value for dbms: 100 
+old  11: dbms:=&dbms; 
+new  11: dbms:=100; 
+Enter value for co: 100 
+old  12: co:=&co; 
+new  12: co:=100; 
+Enter value for mfcsl: 100 
+old  13: mfcs:=&mfcsl; 
+new  13: mfcs:=100; 
+ENTER THE MARKS 
+GRADE A 
+PERCENTAGE IS 100 
+PL/SQL procedure successfully completed. 
+SQL> / 
+Enter value for java: 90 
+old  10: java:=&java; 
+new  10: java:=90; 
+Enter value for dbms: 67 
+old  11: dbms:=&dbms; 
+new  11: dbms:=67; 
+Enter value for co: 89
+old  12: co:=&co; 
+new  12: co:=89; 
+Enter value for mfcsl: 56 
+old  13: mfcs:=&mfcsl; 
+new  13: mfcs:=56; 
+ENTER THE MARKS 
+GRADE A 
+PERCENTAGE IS 75.5 
+PL/SQL procedure successfully completed.
+SQL> / 
+Enter value for java: 56 
+old  10: java:=&java; 
+new  10: java:=56; 
+Enter value for dbms: 78 
+old  11: dbms:=&dbms; 
+new  11: dbms:=78; 
+Enter value for co: 45 
+old  12: co:=&co; 
+new  12: co:=45; 
+Enter value for mfcsl: 44 
+old  13: mfcs:=&mfcsl; 
+new  13: mfcs:=44; 
+ENTER THE MARKS 
+GRADE C 
+PERCENTAGE IS 55.75 
+PL/SQL procedure successfully completed. 
+SQL> / 
+Enter value for java: 8 
+old  10: java:=&java; 
+new  10: java:=8; 
+Enter value for dbms: 9 
+old  11: dbms:=&dbms;
+new  11: dbms:=9; 
+Enter value for co: 78 
+old  12: co:=&co; 
+new  12: co:=78; 
+Enter value for mfcsl: 90 
+old  13: mfcs:=&mfcsl; 
+new  13: mfcs:=90; 
+ENTER THE MARKS 
+FAIL 
+PERCENTAGE IS 46.25 
+PL/SQL procedure successfully completed.

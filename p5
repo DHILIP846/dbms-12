@@ -1,0 +1,198 @@
+)  Implement the above schema enforcing primary key and foreign key constraints.     
+SQL> CREATE TABLE BUS (ROUTENO NUMBER(4) PRIMARY KEY, 
+2  SOURCE VARCHAR(15),DESTINATION VARCHAR(15)); 
+Table created. 
+SQL> DESC BUS 
+Name                                      
+Null?      ----------------------------------------- -------- -  
+ROUTENO                                   
+SOURCE                                               
+DESTINATION                                          
+NOT NULL  
+Type --------------------------- 
+NUMBER(4) 
+VARCHAR2(15) 
+VARCHAR2(15) 
+SQL> CREATE TABLE PASSENGER (PID  NUMBER(4) PRIMARY KEY,
+2  PNAME VARCHAR(15),DOB DATE,GENDER VARCHAR(6));
+Table created. 
+SQL> DESC PASSENGER 
+Name                                      
+Null?     
+Type ----------------------------------------- -------- ---------------------------- 
+PID                                       
+PNAME                                               
+DOB                                                  
+GENDER                                              
+NOT NULL  NUMBER(4) 
+VARCHAR2(15) 
+DATE 
+VARCHAR2(6) 
+SQL> CREATE TABLE BOOK_TICKET(PID  NUMBER(4) REFERENCES PASSENGER(PID), 
+2    ROUTENO NUMBER(4)  REFERENCES BUS(ROUTENO), 
+3    JOURNEY_DATE DATE,SEAT_NO VARCHAR(5), 
+4    PRIMARY KEY(PID,ROUTENO,JOURNEY_DATE)); 
+Table created. 
+SQL> DESC BOOK_TICKET 
+Name                                      
+Null?     
+Type ----------------------------------------- -------- ---------------------------- 
+PID                                       
+ROUTENO                          
+JOURNEY_DATE              
+SEAT_NO                                             
+NOT NULL  NUMBER(4) 
+NOT NULL  NUMBER(4) 
+NOT NULL  DATE 
+VARCHAR2(5) 
+b) inserting records in the above relations.  
+SQL> insert into bus values(&ROUTENO,'&SOURCE','&DESTINATION');
+Enter value for routeno: 10 
+Enter value for source: COIMBATORE 
+Enter value for destination: SALEM 
+old   1: insert into bus values(&ROUTENO,'&SOURCE','&DESTINATION') 
+new   1: insert into bus values(10,'COIMBATORE','SALEM') 
+1 row created. 
+SQL> / 
+Enter value for routeno: 11 
+Enter value for source: COIMBATORE 
+Enter value for destination: METTUPALAYAM 
+old   1: insert into bus values(&ROUTENO,'&SOURCE','&DESTINATION') 
+new   1: insert into bus values(11,'COIMBATORE','METTUPALAYAM') 
+1 row created. 
+SQL> / 
+Enter value for routeno: 12 
+Enter value for source: COIMBATORE 
+Enter value for destination: ERODE 
+old   1: insert into bus values(&ROUTENO,'&SOURCE','&DESTINATION') 
+new   1: insert into bus values(12,'COIMBATORE','ERODE') 
+1 row created. 
+SQL> COMMIT; 
+Commit complete. 
+SQL> insert into PASSENGER VALUES(&PID,'&PNAME','&DOB','&GENDER'); 
+Enter value for pid: 101 
+Enter value for pname: KUMAR 
+Enter value for dob: 12-SEP-78 
+Enter value for gender: M 
+old   1: insert into PASSENGER VALUES(&PID,'&PNAME','&DOB','&GENDER') 
+new   1: insert into PASSENGER VALUES(101,'KUMAR','12-SEP-78','M') 
+1 row created. 
+SQL> / 
+Enter value for pid: 102 
+Enter value for pname: JAYA 
+Enter value for dob: 12-DEC-67 
+Enter value for gender: F 
+old   1: insert into PASSENGER VALUES(&PID,'&PNAME','&DOB','&GENDER') 
+new   1: insert into PASSENGER VALUES(102,'JAYA','12-DEC-67','F') 
+1 row created. 
+SQL> / 
+Enter value for pid: 103 
+Enter value for pname: PRAVEEN 
+Enter value for dob: 20-MAR-01 
+Enter value for gender: M 
+old   1: insert into PASSENGER VALUES(&PID,'&PNAME','&DOB','&GENDER') 
+new   1: insert into PASSENGER VALUES(103,'PRAVEEN','20-MAR-01','M') 
+1 row created. 
+SQL> COMMIT; 
+Commit complete. 
+SQL>  insert into BOOK_TICKET 
+VALUES(&PID,&ROUTENO,'&JOURNEY_DATE','&SEATNO'); 
+Enter value for pid: 101 
+Enter value for routeno: 10 
+Enter value for journey_date: 12-APR-12 
+Enter value for seatno: S1 
+old   1:  insert into BOOK_TICKET 
+VALUES(&PID,&ROUTENO,'&JOURNEY_DATE','&SEATNO') 
+new   1:  insert into BOOK_TICKET VALUES(101,10,'12-APR-12','S1')
+1 row created. 
+SQL> / 
+Enter value for pid: 102 
+Enter value for routeno: 11 
+Enter value for journey_date: 13-SEP-13 
+Enter value for seatno: S10 
+old   1:  insert into BOOK_TICKET 
+VALUES(&PID,&ROUTENO,'&JOURNEY_DATE','&SEATNO') 
+new   1:  insert into BOOK_TICKET VALUES(102,11,'13-SEP-13','S10') 
+1 row created. 
+ 
+SQL> / 
+Enter value for pid: 102 
+Enter value for routeno: 12 
+Enter value for journey_date: 30-JUN-13 
+Enter value for seatno: S12 
+old   1:  insert into BOOK_TICKET 
+VALUES(&PID,&ROUTENO,'&JOURNEY_DATE','&SEATNO') 
+new   1:  insert into BOOK_TICKET VALUES(102,12,'30-JUN-13','S12') 
+ 
+1 row created. 
+ 
+SQL> / 
+Enter value for pid: 102 
+Enter value for routeno: 12 
+Enter value for journey_date: 31-JUL-13 
+Enter value for seatno: S13 
+old   1:  insert into BOOK_TICKET 
+VALUES(&PID,&ROUTENO,'&JOURNEY_DATE','&SEATNO') 
+new   1:  insert into BOOK_TICKET VALUES(102,12,'31-JUL-13','S13') 
+ 
+1 row created. 
+ 
+SQL> / 
+Enter value for pid: 102 
+Enter value for routeno: 12 
+Enter value for journey_date: 31-AUG-13 
+Enter value for seatno: S14 
+old   1:  insert into BOOK_TICKET 
+VALUES(&PID,&ROUTENO,'&JOURNEY_DATE','&SEATNO') 
+new   1:  insert into BOOK_TICKET VALUES(102,12,'31-AUG-13','S14') 
+ 
+1 row created. 
+ 
+SQL> COMMIT; 
+ 
+Commit complete. 
+ 
+SQL> SELECT * FROM BUS; 
+   ROUTENO SOURCE          DESTINATION                                                               ----------    ---------------          ---------------                                                           
+        10 COIMBATORE      SALEM                                                                     
+        11 COIMBATORE      METTUPALAYAM                                                             
+                12 COIMBATORE      ERODE               
+                 
+SQL> SELECT * FROM PASSENGER; 
+ 
+       PID  PNAME           DOB              GENDER                                                          ----------  ---------------       ---------             ------                                                          
+       101  KUMAR       12-SEP-78   M                                                               
+       102  JAYA            12-DEC-67  F                                                               
+       103  PRAVEEN     20-MAR-01  M                                                               
+ 
+SQL>  SELECT * FROM BOOK_TICKET; 
+ 
+       PID    ROUTENO JOURNEY_DATE  SEAT_NO                                                                ----------  ----------  ---------  -----                                                                
+       101         10   12-APR-12  S1                                                                   
+       102         11   13-SEP-13  S10                                                                  
+       102         12   30-JUN-13  S12                                                                  
+       102         12   31-JUL-13  S13                                                                  
+       102         12   31-AUG-13  S14                                                                  
+ 
+ 
+c) Confirm with data Dictionary  
+ 
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE FROM USER_CONSTRAINTS  
+WHERE TABLE_NAME='BUS'; 
+ 
+CONSTRAINT_NAME                CONSTRAINT_TYPE ------------------------------ -  --------------------------- 
+SYS_C005553                     P 
+ 
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE FROM USER_CONSTRAINTS  
+WHERE TABLE_NAME='PASSENGER'; 
+ 
+CONSTRAINT_NAME                CONSTRAINT_TYPE ------------------------------   --------------------------- 
+SYS_C005554                    P 
+ 
+SQL> SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE,R_CONSTRAINT_NAME 
+   FROM USER_CONSTRAINTS  
+WHERE TABLE_NAME='BOOK_TICKET'; 
+CONSTRAINT_NAME               CONSTRAINT_TYPE   R_CONSTRAINT_NAME ------------------------------   ----------------------  - ------------------------------ 
+SYS_C005555                     P 
+SYS_C005556                      R     SYS_C005554 
+SYS_C005557                      R     SYS_C005553

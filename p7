@@ -1,0 +1,100 @@
+1. CREATE A LIBRARY MASTER TABLE: 
+SQL> create table library_master(accno number primary key,title varchar2(25),author varchar2(25), 
+rate number); 
+Table created. 
+2. CREATE A LIBRARY TRANSACTION TABLE: 
+SQL> create table library_transaction(userid number,accno number references library_master(accno), 
+date_of_issue date, date_of_return date); 
+Table created. 
+3.INSERT VALUES INTO LIBRARY_MASTER TABLE: 
+SQL> insert into library_master values(&accno,'&title','&author',&rate); 
+Enter value for accno: 1001 
+Enter value for title: c programming 
+Enter value for author:  balaguruswamy 
+Enter value for rate: 300 
+old   1: insert into library_master values(&accno,'&title','&author',&rate) 
+new   1: insert into library_master values(1001,'c programming',' balaguruswamy',300) 
+1 row created. 
+SQL> / 
+Enter value for accno: 1002 
+Enter value for title: c++ programming 
+Enter value for author: balaguru 
+Enter value for rate: 350 
+old   1: insert into library_master values(&accno,'&title','&author',&rate) 
+new   1: insert into library_master values(1002,'c++ programming','balaguru',350) 
+1 row created. 
+SQL> / 
+Enter value for accno: 1004 
+Enter value for title: data structure 
+Enter value for author: michael 
+Enter value for rate: 400 
+old   1: insert into library_master values(&accno,'&title','&author',&rate) 
+new   1: insert into library_master values(1004,'data structure','michael',400)
+1 row created. 
+SQL> / 
+Enter value for accno: 1005 
+Enter value for title: oracle & RDBMS 
+Enter value for author: john peter 
+Enter value for rate: 320 
+old   1: insert into library_master values(&accno,'&title','&author',&rate) 
+new   1: insert into library_master values(1005,'oracle &RDBMS','john peter',320) 
+1 row created. 
+4.SELECT ALL ROWS FROM LIBRARY_MASTER: 
+ 
+SQL> select * from library_master; 
+     ACCNO TITLE                 AUTHOR                          RATE                                                                                                                                                 
+     ---------- ------------------------- ------------------------- ----------                                                                                                                                                                   
+      1001     c programming       balaguruswamy              300                                                                                                                                                                                                  
+      1002     c++ programming   balaguru                          350                                                                                               
+      1004     data structure          michael                           400                                                                                                                   
+      1005     oracle & RDBMS      john peter                      320     
+                                                                                                                                                                                                                                                                     
+5. INSERT VALUES INTO LIBRARY_TRANSACTION TABLE: 
+SQL> insert into library_transaction values(&userid,&accno,'&date_of_issue','&date_of_return'); 
+Enter value for userid: 01 
+Enter value for accno: 1002 
+Enter value for date_of_issue: 12-jun-16 
+Enter value for date_of_return: 13-jul-16 
+old   1: insert into library_transaction values(&userid,&accno,'&date_of_issue','&date_of_return') 
+new   1: insert into library_transaction values(01,1002,'12-jun-16','13-jul-16') 
+1 row created. 
+SQL> / 
+Enter value for userid: 02 
+Enter value for accno: 1005 
+Enter value for date_of_issue: 25-jul-16 
+Enter value for date_of_return: 24-aug-16 
+old   1: insert into library_transaction values(&userid,&accno,'&date_of_issue','&date_of_return') 
+new   1: insert into library_transaction values(02,1005,'25-jul-16','24-aug-16') 
+1 row created. 
+ 
+SQL> / 
+Enter value for userid: 03  
+Enter value for accno: 1004 
+Enter value for date_of_issue: 01-jun-16 
+Enter value for date_of_return: 30-jun-16 
+old   1: insert into library_transaction values(&userid,&accno,'&date_of_issue','&date_of_return')
+new   1: insert into library_transaction values(03 ,1004,'01-jun-16','30-jun-16') 
+1 row created.
+6. SELECT ALL ROWS FROM LIBRARY_TRANSACTION: 
+SQL> select * from library_transaction; 
+USERID  ACCNO DATE_OF_I DATE_OF_R                                                                                                                                                                                                                         ---------- ---------- --------------- ----------------                                                                                                                             
+ 1         1002     12-JUN-16       13-JUL-16                                                                                                                           
+2         1005     25-JUL-16        24-AUG-16                                                                                                                                                                                                        
+3            1004     01-JUN-16       30-JUN-16            
+7. FORMATING THE LIBRARY MANAGEMENT SYSTEM                                
+SQL> set linesize 75 
+SQL>Ttitle center “LIBRARY MANAGEMENT' skip 1- 
+>center ****************** 
+SQL>  column accno heading 'ACCOUNT NUMBER' 
+SQL>  column title heading 'BOOK_NAME' 
+SQL>  column date_of_issue heading 'DATE_OF_ISSUE' 
+SQL>  column date_of_retrun heading 'DATE_OF_RETURN' 
+SQL>  set  underline- 
+SQL>  break on row skip1 
+SQL>  select m.accno,m.title,t.date_of_issue from library_masterm,library_transaction t 
+            where m.accno=t.accno and date_of_return='24-aug-16'; 
+                             
+ LIBRARY MANAGEMENT                             
+                             **********************                             
+ACCOUNT NUMBER BOOK_NAME                 DATE_OF_ISSUE                         
+        1005   oracle & RDBMS             25-JUL-16   

@@ -1,0 +1,149 @@
+ 
+1.CREATE A TABLE FOR EMPLOYEE DETAILS: 
+create table employee(empno number primary key,empname varchar2(20),designation varchar2(30),gender 
+varchar2(6),age number,dojdate,salary number); 
+Table created. 
+2. DESCRIBE A TABLE: 
+SQL>desc employee; 
+Name                                      Null?     Type 
+ --------------------------------------  -------------- ---------------------------- 
+ EMPNO                                     NOT NULL  NUMBER 
+ EMPNAME                                             VARCHAR2(20) 
+ DESIGNATION                                     VARCHAR2(30) 
+ GENDER                                               VARCHAR2(6) 
+ AGE                                             NUMBER 
+ DOJ                                             DATE 
+ SALARY                                               NUMBER 
+ 
+3.INSERT A VALUES FOR A EMPLOYEE TABLE: 
+SQL> insert into employee values(&empno,'&empname','&designation','&gender',&age,'&doj',&salary); 
+ 
+4.SELECT ALL THE ROWS FROM THE EMPLOYEE TABLE: 
+SQL>select * from employee; 
+ 
+EMPNO  EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------       ---------------  -------------------------     --------------         -------    -------------    ------------ 
+   101   arjun             manager                       male                        30    12-JAN-14    35000 
+Lab Manual-2024 Batch Onwards
+
+
+   103         manoj            clerk                             male                        26    28-MAR-15  28000 
+   102       john               hr                                  male                        32    17-APR-15   30000 
+   105        peter              marketing manager    male                        35    01-FEB-15    35000 
+   104       pooja              project developer       female                     27    14-APR-15    25000 
+   107       aishu              tester                            female                     25    20-JUL-15     24000 
+   108       yamuna         clerk                             female                     30    11-JAN-15     31000 
+7 rows selected. 
+ 
+5.COMPARISON: 
+(i) SQL> select * from employee where salary>30000; 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101  arjun             manager                       male                        30    12-JAN-14    35000 
+105          peter              marketing manager    male                        35    01-FEB-15    35000 
+108          yamuna         clerk                             female                     30    11-JAN-15     31000 
+ 
+(ii) SQL> select * from employee where age between 25 and 30; 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------        -------    -------------    ------------- 
+101  arjun             manager                       male                        30    12-JAN-14      35000 
+103          manoj            clerk                             male                        26    28-MAR-15    28000 
+104          pooja              project developer       female                     27    14-APR-15     25000 
+107          aishu              tester                            female                     25    20-JUL-15      24000 
+108          yamuna         clerk                             female                     30    11-JAN-15      31000 
+ 
+(iii) SQL> select * from employee where empname like '%a';
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+   104       pooja              project developer       female                     27    14-APR-15    25000 
+   108       yamuna         clerk                             female                     30    11-JAN-15     31000 
+ 
+(iv) SQL> select * from employee where salary in(35000,30000,28000); 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101     arjun             manager                             male                    30    12-JAN-14      35000 
+103          manoj            clerk                                  male                    26    28-MAR-15    28000 
+102      john               hr                                      male                    32    17-APR-15     30000 
+105          peter              marketing manager           male                    35    01-FEB-15     35000 
+ 
+(v) SQL>select * from employee where empno=103; 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+103          manoj            clerk                             male                        26    28-MAR-15    28000 
+ 
+5.LOGICAL: 
+(i) SQL>  select * from employee where salary<50000 and salary>30000; 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101     arjun             manager                       male                        30    12-JAN-14      35000 
+105          peter              marketing manager    male                        35    01-FEB-15      35000 
+108          yamuna         clerk                             female                     30    11-JAN-15      31000 
+(ii) SQL> select * from employee where designation='manager' or designation='admin'; 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101  arjun             manager                       male                        30    12-JAN-14      35000 
+ 
+(iii) SQL> select * from employee where not salary<30000; 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101     arjun              manager                           male                        30    12-JAN-14      35000 
+102      john               hr                                    male                        32    17-APR-15     30000 
+105          peter              marketing manager         male                        35    01-FEB-15     35000 
+108          yamuna         clerk                                female                     30    11-JAN-15      31000 
+4 rows selected. 
+6.SORTING: 
+(i)  SQL> select * from employee order by empno; 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101      arjun             manager                         male                        30    12-JAN-14      35000 
+102      john               hr                                  male                        32    17-APR-15     30000 
+103          manoj            clerk                               male                        26    28-MAR-15    28000 
+104          pooja             project developer           female                     27    14-APR-15      25000 
+105          peter              marketing manager        male                        35    01-FEB-15     35000 
+107          aishu              tester                              female                     25    20-JUL-15     24000 
+108          yamuna         clerk                               female                     30    11-JAN-15     31000 
+7 rows selected.
+(ii)  SQL> select * from employee order by empno desc; 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+108          yamuna         clerk                                    female                     30    11-JAN-15     31000 
+107          aishu              tester                                  female                     25    20-JUL-15     24000 
+105          peter              marketing manager            male                        35    01-FEB-15     35000 
+104          pooja             project developer               female                     27    14-APR-15      25000 
+103          manoj            clerk                                   male                        26    28-MAR-15    28000 
+102      john               hr                                      male                        32    17-APR-15     30000 
+101      arjun             manager                             male                        30    12-JAN-14      35000 
+7 rows selected. 
+ 
+7.SET OPERATION: 
+(i) SQL> select * from employee where salary>30000 union select * from employee where age between 25 
+and 30; 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101     arjun              manager                       male                        30    12-JAN-14      35000 
+103          manoj            clerk                             male                        26    28-MAR-15    28000 
+104          pooja             project developer       female                       27    14-APR-15      25000 
+105          peter              marketing manager    male                          35    01-FEB-15     35000 
+107          aishu              tester                            female                     25    20-JUL-15     24000 
+108          yamuna         clerk                             female                     30    11-JAN-15     31000 
+6 rows selected.
+
+) SQL> select * from employee where salary>30000 union all select * from employee where age between 
+25 and 30; 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101     arjun              manager                             male                        30    12-JAN-14     35000 
+105          peter               marketing manager          male                        35    01-FEB-15     35000 
+108          yamuna          clerk                                 female                     30    11-JAN-15     31000 
+101     arjun              manager                            male                        30    12-JAN-14     35000 
+103          manoj             clerk                                 male                        26    28-MAR-15   28000 
+104          pooja              project developer            female                     27    14-APR-15    25000 
+107          aishu               tester                              female                     25    20-JUL-15     24000 
+108          yamuna          clerk                                female                     30    11-JAN-15     31000 
+8 rows selected. 
+ 
+(iii) SQL> select * from employee where salary>30000 intersect  select * from employee where age between 
+25 and 30; 
+ 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------      ---------------  -------------------------     --------------         -------    -------------    ------------ 
+101      arjun             manager                        male                        30    12-JAN-14    35000 
+108          yamuna         clerk                             female                     30    11-JAN-15     31000 
+ 
+(iv) SQL> select * from employee where salary>30000 minus select * from employee where age between 25 
+and 30; 
+EMPNO EMPNAME DESIGNATION        GENDER           AGE      DOJ            SALARY -------  ---------------  -------------------------     --------------       -------    -------------    -----------
+105          peter              marketing manager           male                        35    01-FEB-15    35000
